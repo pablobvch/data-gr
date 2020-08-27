@@ -1,4 +1,4 @@
-import lineGraphRouteDefinitions from "./routes/line-graphs/routeDefinition";
 import postsRouteDefinitions from "./routes/posts/routeDefinition";
+import lineGraphRouteDefinitions from "./routes/line-graphs/routeDefinition";
 
-export default [...lineGraphRouteDefinitions, ...postsRouteDefinitions];
+export default [...postsRouteDefinitions, ...lineGraphRouteDefinitions];

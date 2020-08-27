@@ -21,7 +21,7 @@ const renderRouteFrom = (routeDefinition, index) =>
 const renderRoutes = ({ routeDefinitions }) =>
   routeDefinitions.map(renderRouteFrom);
 
-const Router = (props: Props) => (
+const Router = (props) => (
   <BrowserRouter>
     <Switch>{renderRoutes(props)}</Switch>
   </BrowserRouter>
