@@ -15,7 +15,7 @@ import pagesDefinitionsList from "./pagesDefinitionsList";
 const StyledNavLink = styled(NavLink)`
   font-weight: bold;
   &:hover {
-    color: aqua !important;
+    color: black !important;
   }
 `;
 
@@ -48,7 +48,7 @@ const StyledNavbarBrand = styled(NavbarBrand)`
 
 const renderNavbarContent = ({ onToggle, isOpen }) => (
   <Fragment>
-    <StyledNavbarBrand href="/">DataGr</StyledNavbarBrand>
+    <StyledNavbarBrand href="/">DATA GR</StyledNavbarBrand>
     <NavbarToggler onClick={onToggle} />
     <Collapse isOpen={isOpen} navbar>
       {renderNav()}

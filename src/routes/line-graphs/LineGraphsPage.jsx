@@ -2,22 +2,26 @@ import React, { useState } from "react";
 
 import DropDowns from "../../components/drop-downs";
 import Textarea from "../../components/textarea";
-import Navbar from "../../components/navbar/";
+import { Form, FormGroup, Container, Label } from "reactstrap";
 
-const renderNavbar = () => <Navbar />;
-
-const initialState = { fileContent: "", result: "" };
+const initialState = { fileContent: "", columns: [] };
 
 function LineGraphs() {
   const [state, updateState] = useState(initialState);
 
   return (
-    <div>
-      {renderNavbar()}
-      <Textarea {...{ state }} updateState={updateState}></Textarea>
-      <DropDowns {...{ state }} />
-      {state.result}
-    </div>
+    <Container>
+      <Form>
+        <FormGroup>
+          <Label>Paste your cvs</Label>
+          <Textarea {...{ state, updateState }}></Textarea>
+        </FormGroup>
+        <FormGroup>
+          <Label>Select Axles</Label>
+          <DropDowns {...{ state, updateState }} />
+        </FormGroup>
+      </Form>
+    </Container>
   );
 }
 

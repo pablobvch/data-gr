@@ -1,7 +1,7 @@
 const pagesDefinitionsList = [
   {
     path: "/",
-    title: "LineGraphs",
+    title: "LINE GRAPHS",
     route: "./routes/line-graphs/LineGraphsPage",
     exact: true
   },

@@ -1,7 +1,13 @@
 import React from "react";
 
+const getHeaders = (fileContent) =>
+  fileContent.substr(0, fileContent.indexOf("\n")).split(",");
+
 const onClickHandler = (state, updateState) => () =>
-  updateState((state) => ({ ...state, result: state.fileContent }));
+  updateState((state) => ({
+    ...state,
+    columns: getHeaders(state.fileContent)
+  }));
 
 function Textarea({ state, updateState }) {
   return (
