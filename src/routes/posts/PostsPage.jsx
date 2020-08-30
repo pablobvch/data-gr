@@ -4,6 +4,7 @@ import axios from "axios";
 
 const PostsPage = (props) => {
   const [state, updateState] = useState({
+    comments: [],
     posts: [],
     userIdClicked: 0
   });
