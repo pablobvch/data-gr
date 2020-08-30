@@ -55,6 +55,7 @@ const renderNavbarContent = ({ onToggle, isOpen }) => (
     </Collapse>
   </Fragment>
 );
+
 const renderNavbar = (props) => (
   <Navbar color="withe" light expand="md">
     {renderNavbarContent(props)}

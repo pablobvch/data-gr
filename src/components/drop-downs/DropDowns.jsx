@@ -1,5 +1,4 @@
 import React from "react";
-import { Row } from "reactstrap";
 import styled from "styled-components";
 
 const renderOption = (column, selectName, index) => (
@@ -7,9 +6,7 @@ const renderOption = (column, selectName, index) => (
 );
 
 const renderOptionsUsing = (columns, selectName) =>
-  columns.map((column, index) => {
-    return renderOption(column, selectName, index);
-  });
+  columns.map((column, index) => renderOption(column, selectName, index));
 
 const shouldRenderOptions = (columns) => columns.length > 0;
 
@@ -22,20 +19,17 @@ const StyledSelect = styled.select`
   margin: 4px;
 `;
 
-const DropDowns = ({ state: { columns }, updateState }) => {
-  console.log("columns en DropDowns", columns);
-  return (
-    <div>
-      <StyledSelect>
-        <option>X AXIS</option>
-        {renderOptions(columns, "X")}
-      </StyledSelect>
-      <StyledSelect>
-        <option>Y AXIS</option>
-        {renderOptions(columns, "Y")}
-      </StyledSelect>
-    </div>
-  );
-};
+const DropDowns = ({ state: { columns }, updateState }) => (
+  <div>
+    <StyledSelect>
+      <option>X AXIS</option>
+      {renderOptions(columns, "X")}
+    </StyledSelect>
+    <StyledSelect>
+      <option>Y AXIS</option>
+      {renderOptions(columns, "Y")}
+    </StyledSelect>
+  </div>
+);
 
 export default DropDowns;

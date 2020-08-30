@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { Form, FormGroup, Container, Label } from "reactstrap";
+//import ReactHighcharts from "react-highcharts";
 
 import DropDowns from "../../components/drop-downs";
 import Textarea from "../../components/textarea";
-import { Form, FormGroup, Container, Label } from "reactstrap";
 
-const initialState = { fileContent: "", columns: [] };
+const initialState = { columns: [], fileContent: "", errorMessage: "" };
 
-function LineGraphs() {
+//const config = {};
+
+const LineGraphs = () => {
   const [state, updateState] = useState(initialState);
 
   return (
@@ -21,8 +24,9 @@ function LineGraphs() {
           <DropDowns {...{ state, updateState }} />
         </FormGroup>
       </Form>
+      {/*<ReactHighcharts {...config}></ReactHighcharts>*/}
     </Container>
   );
-}
+};
 
 export default LineGraphs;
