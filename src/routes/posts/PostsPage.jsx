@@ -2,6 +2,25 @@ import React, { useState, useEffect } from "react";
 import PostPageView from "./PostPageView";
 import axios from "axios";
 
+const getHandlers = (state, updateState) => ({
+  onUserIdClickHandler: (state, updateState, userId) => () =>
+    updateState((state) => ({ ...state, userIdClicked: userId, comments: [] })),
+  onPostIdClickHandler: (state, updateState, id) => () => {
+    async function fetchData() {
+      const response = await axios(
+        `https://jsonplaceholder.typicode.com/comments?postId=${id}`
+      );
+
+      updateState((state) => ({
+        ...state,
+        comments: response.data,
+        userIdClicked: 0
+      }));
+    }
+    fetchData();
+  }
+});
+
 const PostsPage = (props) => {
   const [state, updateState] = useState({
     comments: [],
@@ -20,7 +39,12 @@ const PostsPage = (props) => {
     fetchData();
   }, []);
 
-  return <PostPageView {...{ state, updateState }} />;
+  return (
+    <PostPageView
+      {...{ state, updateState }}
+      {...getHandlers(state, updateState)}
+    />
+  );
 };
 
 export default PostsPage;
