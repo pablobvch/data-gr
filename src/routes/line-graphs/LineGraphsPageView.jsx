@@ -36,7 +36,6 @@ const renderForm = (
 
 const LineGraphsPageView = ({
   state,
-  updateState,
   config,
   onClickHandler,
   onChangeHandler,

@@ -3,9 +3,9 @@ import PostPageView from "./PostPageView";
 import axios from "axios";
 
 const getHandlers = (state, updateState) => ({
-  onUserIdClickHandler: (state, updateState, userId) => () =>
+  onUserIdClickHandler: (state, userId) => () =>
     updateState((state) => ({ ...state, userIdClicked: userId, comments: [] })),
-  onPostIdClickHandler: (state, updateState, id) => () => {
+  onPostIdClickHandler: (state, id) => () => {
     async function fetchData() {
       const response = await axios(
         `https://jsonplaceholder.typicode.com/comments?postId=${id}`
@@ -21,12 +21,14 @@ const getHandlers = (state, updateState) => ({
   }
 });
 
+const initialState = {
+  comments: [],
+  posts: [],
+  userIdClicked: 0
+};
+
 const PostsPage = (props) => {
-  const [state, updateState] = useState({
-    comments: [],
-    posts: [],
-    userIdClicked: 0
-  });
+  const [state, updateState] = useState(initialState);
 
   useEffect(() => {
     async function fetchData() {

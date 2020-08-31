@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const shouldRenderThirdDataTable = (comments) => comments.length > 0;
 
-const renderThirdDataTableIfNeeded = (state, updateState) =>
+const renderThirdDataTableIfNeeded = (state) =>
   shouldRenderThirdDataTable(state.comments) ? (
     <DataTable
       columns={commentsColumns}
@@ -19,7 +19,7 @@ const renderThirdDataTableIfNeeded = (state, updateState) =>
 
 const shouldRenderSecondDataTable = (userIdClicked) => userIdClicked !== 0;
 
-const renderSecondDataTableIfNeeded = (state, updateState) =>
+const renderSecondDataTableIfNeeded = (state) =>
   shouldRenderSecondDataTable(state.userIdClicked) ? (
     <DataTable
       columns={postsByUserIdColumns}
@@ -33,15 +33,10 @@ const renderSecondDataTableIfNeeded = (state, updateState) =>
 const getPostByUserIdClicked = (posts, userIdClicked) =>
   posts.filter((post) => post.userId === userIdClicked);
 
-const getColumns = (
-  state,
-  updateState,
-  onUserIdClickHandler,
-  onPostIdClickHandler
-) => [
+const getColumns = (state, onUserIdClickHandler, onPostIdClickHandler) => [
   {
     cell: (row) => (
-      <div onClick={onUserIdClickHandler(state, updateState, row.userId)}>
+      <div onClick={onUserIdClickHandler(state, row.userId)}>
         <Link to="#">{row.userId}</Link>
       </div>
     ),
@@ -51,7 +46,7 @@ const getColumns = (
   },
   {
     cell: (row) => (
-      <div onClick={onPostIdClickHandler(state, updateState, row.id)}>
+      <div onClick={onPostIdClickHandler(state, row.id)}>
         <Link to="#">{row.id}</Link>
       </div>
     ),
@@ -110,24 +105,18 @@ const commentsColumns = [
 
 const PostPageView = ({
   state,
-  updateState,
   onUserIdClickHandler,
   onPostIdClickHandler
 }) => (
   <Container>
     <DataTable
-      columns={getColumns(
-        state,
-        updateState,
-        onUserIdClickHandler,
-        onPostIdClickHandler
-      )}
+      columns={getColumns(state, onUserIdClickHandler, onPostIdClickHandler)}
       data={state.posts}
       pagination={true}
       title="Posts"
     />
-    {renderSecondDataTableIfNeeded(state, updateState)}
-    {renderThirdDataTableIfNeeded(state, updateState)}
+    {renderSecondDataTableIfNeeded(state)}
+    {renderThirdDataTableIfNeeded(state)}
   </Container>
 );
 
