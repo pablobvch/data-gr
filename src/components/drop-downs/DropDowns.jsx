@@ -1,33 +1,35 @@
 import React from "react";
 import styled from "styled-components";
 
-const renderOption = (column, selectName, index) => (
-  <option key={`${selectName}${index}`}>{column}</option>
+const renderOption = (header, selectName, index) => (
+  <option key={`${selectName}${index}`} value={header}>
+    {header}
+  </option>
 );
 
-const renderOptionsUsing = (columns, selectName) =>
-  columns.map((column, index) => renderOption(column, selectName, index));
+const renderOptionsUsing = (headers, selectName) =>
+  headers.map((header, index) => renderOption(header, selectName, index));
 
-const shouldRenderOptions = (columns) => columns.length > 0;
+const shouldRenderOptions = (headers) => headers.length > 0;
 
-const renderOptions = (columns, selectName) =>
-  shouldRenderOptions(columns)
-    ? renderOptionsUsing(columns, selectName)
+const renderOptions = (headers, selectName) =>
+  shouldRenderOptions(headers)
+    ? renderOptionsUsing(headers, selectName)
     : false;
 
 const StyledSelect = styled.select`
   margin: 4px;
 `;
 
-const DropDowns = ({ state: { columns }, updateState }) => (
+const DropDowns = ({ state, onXAxisChange, onYAxisChange }) => (
   <div>
-    <StyledSelect>
+    <StyledSelect onChange={(event) => onXAxisChange(event.target.value)}>
       <option>X AXIS</option>
-      {renderOptions(columns, "X")}
+      {renderOptions(state.headers, "X")}
     </StyledSelect>
-    <StyledSelect>
+    <StyledSelect onChange={(event) => onYAxisChange(event.target.value)}>
       <option>Y AXIS</option>
-      {renderOptions(columns, "Y")}
+      {renderOptions(state.headers, "Y")}
     </StyledSelect>
   </div>
 );

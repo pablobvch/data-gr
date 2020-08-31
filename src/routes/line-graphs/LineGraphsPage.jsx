@@ -1,31 +1,92 @@
 import React, { useState } from "react";
-import { Form, FormGroup, Container, Label } from "reactstrap";
-//import ReactHighcharts from "react-highcharts";
+import Papa from "papaparse";
 
-import DropDowns from "../../components/drop-downs";
-import Textarea from "../../components/textarea";
+import LineGraphsPageView from "./LineGraphsPageView";
 
-const initialState = { columns: [], fileContent: "", errorMessage: "" };
+const initialState = {
+  categories: [],
+  data: [],
+  errorMessage: "",
+  fileContent: "",
+  headers: [],
+  seriesData: [],
+  xAxisValue: null,
+  yAxisValue: null
+};
 
-//const config = {};
+const getDataFromAxisValue = (data, axisValue) => data.map((d) => d[axisValue]);
+
+const getData = (fileContent) =>
+  Papa.parse(fileContent, {
+    header: true,
+    delimiter: ","
+  }).data;
+
+const getHeaders = (fileContent) =>
+  Papa.parse(fileContent, {
+    header: true,
+    delimiter: ","
+  }).meta.fields;
+
+const validateCvs = (fileContent) =>
+  Papa.parse(fileContent, {
+    header: true,
+    delimiter: ","
+  }).errors.length === 0;
+
+const getHandlers = (state, updateState) => ({
+  onChangeHandler: (e) =>
+    updateState({ ...state, fileContent: e.target.value }),
+
+  onClickHandler: (state) => () =>
+    validateCvs(state.fileContent)
+      ? updateState((state) => ({
+          ...state,
+          errorMessage: "",
+          headers: getHeaders(state.fileContent),
+          data: getData(state.fileContent)
+        }))
+      : updateState((state) => ({
+          ...state,
+          errorMessage: "invalid",
+          headers: [],
+          data: getData(state.fileContent)
+        })),
+
+  onYAxisChange: (value) =>
+    updateState((state) => ({
+      ...state,
+      yAxisValue: value,
+      seriesData: getDataFromAxisValue(state.data, value)
+    })),
+
+  onXAxisChange: (value) =>
+    updateState((state) => ({
+      ...state,
+      xAxisValue: value,
+      categories: getDataFromAxisValue(state.data, value)
+    }))
+});
 
 const LineGraphs = () => {
   const [state, updateState] = useState(initialState);
 
+  const config = {
+    xAxis: {
+      categories: state.categories
+    },
+    series: [
+      {
+        data: state.seriesData.map(Number)
+      }
+    ]
+  };
+
   return (
-    <Container>
-      <Form>
-        <FormGroup>
-          <Label>Paste your cvs</Label>
-          <Textarea {...{ state, updateState }}></Textarea>
-        </FormGroup>
-        <FormGroup>
-          <Label>Select Axles</Label>
-          <DropDowns {...{ state, updateState }} />
-        </FormGroup>
-      </Form>
-      {/*<ReactHighcharts {...config}></ReactHighcharts>*/}
-    </Container>
+    <LineGraphsPageView
+      {...{ state, updateState, config }}
+      {...getHandlers(state, updateState)}
+    />
   );
 };
 

@@ -11,7 +11,7 @@ const renderThirdDataTableIfNeeded = (state, updateState) =>
     <DataTable
       columns={commentsColumns}
       data={state.comments}
-      title={`Comments`}
+      title={`Comments by postId`}
     />
   ) : (
     false
@@ -24,7 +24,7 @@ const renderSecondDataTableIfNeeded = (state, updateState) =>
     <DataTable
       columns={postsByUserIdColumns}
       data={getPostByUserIdClicked(state.posts, state.userIdClicked)}
-      title={`Posts`}
+      title={`Posts by userId ${state.userIdClicked}`}
     />
   ) : (
     false
